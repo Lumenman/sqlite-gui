@@ -972,7 +972,7 @@ namespace utils {
 				InternetReadFile(hUrl, buf8, 32000, &read);
 
 				resSize += read;
-				res8 = res8 ? (char*)realloc(res8, resSize) : new char[resSize]{0};
+				res8 = (char*)realloc(res8, resSize);
 				for (DWORD i = 0; i < read; i++)
 					res8[resSize - read + i - 1] = buf8[i];
 				delete [] buf8;
@@ -993,7 +993,7 @@ namespace utils {
 				rc = true;
 			}
 
-			delete [] res8;
+			free(res8);
 		}
 
 		InternetCloseHandle(hUrl);
