@@ -5897,6 +5897,8 @@ bool openConnection(sqlite3** _db, const char* path8, bool isReadOnly) {
 
 	sqlite3_open_v2(path8 && strlen(path8) > 0 ? path8 : "file::memory:?cache=shared", _db, mode | SQLITE_OPEN_NOMUTEX | SQLITE_OPEN_URI, NULL);
 	sqlite3_enable_load_extension(*_db, true);
+	// SQLite 3.52+ prints doubles with 17 digits (0.1 + 0.2 = 0.30000000000000004); keep the old 15. Older DLLs ignore it
+	sqlite3_db_config(*_db, SQLITE_DBCONFIG_FP_DIGITS, 15, (int*)0);
 
 	loadExtensions(db, *_db);
 
