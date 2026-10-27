@@ -155,9 +155,9 @@ namespace utils {
 		while (p[0] && !_istgraph(p[0]))
 			p++;
 
-		TCHAR* q = p ? _tcschr(TEXT("'`\"["), p[0]) : 0;
+		const TCHAR* q = p ? _tcschr(TEXT("'`\"["), p[0]) : 0;
 		if (q && q[0]) {
-			TCHAR* q2 = _tcschr(p + 1, q[0] == TEXT('[') ? TEXT(']') : q[0]);
+			const TCHAR* q2 = _tcschr(p + 1, q[0] == TEXT('[') ? TEXT(']') : q[0]);
 			while (q2[0] == TEXT('"') && q2[1] == TEXT('"'))
 				q2 = _tcschr(q2 + 2, TEXT('"'));
 
@@ -182,7 +182,7 @@ namespace utils {
 			}
 
 		} else {
-			TCHAR* d = p ? _tcschr(p, TEXT('.')) : 0;
+			const TCHAR* d = p ? _tcschr(p, TEXT('.')) : 0;
 			if (d && isSchema)
 				_tcsncpy(res, p, _tcslen(p) - _tcslen(d));
 			if (d && !isSchema) {

@@ -174,7 +174,7 @@ namespace http {
 	};
 
 	char *getHTTPResponse(const char *HTTPRequest) {
-		char *start = strchr(HTTPRequest, '/');
+		const char *start = strchr(HTTPRequest, '/');
 		int len = strchr(HTTPRequest, '\n') - start;
 		while (len > 0 && ((start + len)[0] != ' '))
 			len--;
@@ -204,7 +204,7 @@ namespace http {
 		if (strlen(id8) == 0)
 			sscanf(path8, "/api/%[^?/]?%[^,]", table8, search8);
 
-		char* postData8 = strstr(HTTPRequest, "\n\n");
+		const char* postData8 = strstr(HTTPRequest, "\n\n");
 		if (postData8 == NULL)
 			postData8 = strstr(HTTPRequest, "\r\n\r\n");
 
