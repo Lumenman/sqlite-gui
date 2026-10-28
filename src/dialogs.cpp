@@ -2834,7 +2834,8 @@ namespace dialogs {
 
 					sqlite3_stmt* stmt;
 					if (SQLITE_OK == sqlite3_prepare_v2(db,
-						"with dflt as (select * from pragma_table_info where arg = ?1 and schema = ?2), " \
+						// xinfo: generated columns are in the grid too, otherwise hints shift after them
+						"with dflt as (select * from pragma_table_xinfo where arg = ?1 and schema = ?2 and hidden <> 1), " \
 						"fk as (select * from pragma_foreign_key_list where arg = ?1 and schema = ?2) " \
 						"select replace(dflt_value, '\"\"', '\"'), iif(fk.\"table\" is not null, 'Reference to ' || fk.\"table\" || '.' || fk.\"to\", '') " \
 						"from dflt left join fk on dflt.name = fk.\"from\" order by dflt.cid",
